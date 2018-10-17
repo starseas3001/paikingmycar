@@ -1,0 +1,401 @@
+{% extends 'base_car.html' %}
+{% load staticfiles %}
+{% load price_cacl %}
+{% block title %}
+    我要卖车-郑州高品质二手车专家_亿金汽车
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sell.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/alert.css' %}">
+{% endblock %}
+
+{% block style %}
+    <style>
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+            color: #000;
+        }
+
+        input:-moz-placeholder, textarea:-moz-placeholder {
+            color: #000;
+        }
+
+        input::-moz-placeholder, textarea::-moz-placeholder {
+            color: #000;
+        }
+
+        input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+            color: #000;
+        }
+
+        .select-item {
+            margin-bottom: 25px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="about">
+        <div class="mTags wrap">
+            <a href="#">亿金名车广场</a>><a href="{% url 'oper:sell_car' %}">我要卖车</a>
+        </div>
+        <div class="sellBox">
+            <div class="sellTop">
+                <div class="wrap">
+                    <div class="selDetail">
+                        <div class="sel-a left dInline">
+                            <ul class="clearfix">
+                                <li>
+                                    <img src="{% static 'images/sell1_1.png' %}"/>
+                                    <strong>流程简单</strong>
+                                </li>
+                                <li>
+                                    <img src="{% static 'images/sell1_2.png' %}"/>
+                                    <strong>快速回款</strong>
+                                </li>
+                                <li class="last">
+                                    <img src="{% static 'images/sell1.png' %}" style="color:#000"/>
+                                    <strong>诚信服务</strong>
+                                </li>
+                            </ul>
+                            <p>
+                                <strong style="font-size:24px;">亿金标准</strong><br/><br/>
+                                车龄不超过4年<br/>
+                                行驶里程不超过80000公里<br/>
+                                无结构性损伤，非事故车、泡水车或火烧车<br/>
+                                具有完备、合法的车辆手续
+                            </p>
+                        </div>
+                        <div class="sell-form right dInline">
+                            <form enctype="multipart/form-data" action="" method="post" name="forms" id="forms"
+                                  onsubmit="return sellCar({{ request.user }});">
+                                <h3>登记您的爱车信息</h3>
+                                {% if request.user.is_authenticated %}
+                                {% else %}
+                                <a id="sell_login" style="color:red">您目前暂未登录，点击登录>>></a>
+                                {% endif %}
+                                <div class="sell-info" style="margin-top:5px">
+
+                                    <div class="select-item clearfix">
+                                        {% if request.user.is_authenticated %}
+                                            <select class="select car-select" name="makeid" id="Smakeid2" placeholder="所属品牌" style="width:100%">
+                                                <option value=""> 选择品牌（必选）</option>
+                                                {% for brands in all_brands %}
+                                                    <option value="{{ brands.name }}"> {{ brands.key }} {{ brands.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% else %}
+                                            <select class="select car-select" name="makeid" id="alert_login" placeholder="所属品牌" style="width:100%">
+                                                <option value=""> 选择品牌（必选）</option>
+                                                <option>您目前暂未登录，请先登录</option>
+                                                {% for brands in all_brands %}
+                                                    <option value="{{ brands.name }}"> {{ brands.key }} {{ brands.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% endif %}
+
+{#                                        <select class="select car-select" name="makeid" id="makeCar" style="width:100%">#}
+{##}
+{#                                        </select>#}
+                                    </div>
+
+
+                                    <div class="select-item clearfix">
+
+                                        {% if request.user.is_authenticated %}
+                                        <select class="select car-select" name="modeid" id="Smodeid2" style="width:100%">
+                                            <option>选择车系(必选)</option>
+                                        </select>
+                                        {% else %}
+                                        <select class="select car-select" name="modeid" id="alert_login" style="width:100%">
+                                            <option>选择车系(必选)</option>
+                                            <option>您目前暂未登录，请先登录</option>
+                                        </select>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="select-item clearfix">
+                                        {% if request.user.is_authenticated %}
+                                        <select class="select car-select" name="styleid" id="styleCar" style="width:100%">
+                                            <option>请选择车型</option>
+                                        {% for type in all_types %}
+                                         <option value="{{ type.type_name }}">{{ type.type_name }}</option>
+                                        {% endfor %}
+                                        </select>
+                                        {% else %}
+                                         <select class="select car-select" name="styleid" id="styleCar" style="width:100%">
+                                            <option value="">请选择车型</option>
+                                         <option>您目前暂未登录，请先登录</option>
+                                         </select>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="select-item clearfix">
+                                        <input type="text" value="" placeholder="上牌时间" class="form_datetime cPut"
+                                               id="buytimeval" name="buytime" data-date-format="yyyy-mm"
+                                               style="float:left; width:150px"/>
+                                        <input type="text" name="mile" placeholder="行驶里程(0-100)" value="" class="cPut"
+                                               id="mialval" style="float:right"/>
+                                        <div class="unit">万公里</div>
+                                    </div>
+                                    <div class="seBtn">
+
+{#                                        <a href="#showDiv" class="gj_btn">估一下价</a>#}
+                                        {% if request.user.is_authenticated %}
+
+
+                                        <a href="javascript:void(0)" onclick="$('#forms').submit()" class="btn">提交</a>
+                                        {% else %}
+                                         <a href="javascript:void(0)" id="btn_login">提交</a>
+                                        {% endif %}
+                                        <!--<a href="javascript:void(0)" onclick="$('#forms').submit()">登记</a>-->
+                                        <!--<a href="#">评估</a>-->
+                                    </div>
+                                </div>
+                            {% csrf_token %}
+                            </form>
+                            <input type="hidden" id="ckmobile" value="1"/>
+                            <script type="text/livescript">
+$("#sendMESS").live("click",function(){
+	var ckmobile=$("#ckmobile").val();
+	if(ckmobile){
+		$("#yzcode").attr("src",'/Admin/Login/buildVerify');
+		$('#popBoxYzm').fadeIn();
+	}else{
+		sendtosend();
+	}
+});
+function sendtosend(){
+	var mobile=$("#shoujihao").val();
+	var verify=$("#yanzhengma").val();
+	var re = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+	if(!re.exec(mobile)){
+		alert("手机号格式不正确");
+		$("#shoujihao").focus();
+		return false;
+	}else{
+		$("#input-phone").val(mobile);
+		$("#input-verify").val(verify);
+		$('#popBoxYzm').fadeOut();
+		$('#forms').submit();
+	}
+}
+
+                            </script>
+                            <link rel="stylesheet" type="text/css" href="css/jquery.fancybox-1.3.4.css">
+                            <script type="text/javascript" src="js/jquery.fancybox-1.3.4.js"></script>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $(".gj_btn").live("click", function () {
+                                        var makeCar = $("#makeCar").val();
+                                        var modeCar = $("#modeCar").val();
+                                        var styleCar = $("#styleCar").val();
+                                        var buytimeval = $("#buytimeval").val();
+                                        var mialval = $("#mialval").val();
+                                        var url = '/Sales/getprice';
+                                        if (makeCar == '') {
+                                            alert("请选择品牌");
+                                            $("#makeCar").focus();
+                                            return false;
+                                        }
+                                        if (modeCar == '') {
+                                            alert("请选择车系");
+                                            $("#modeCar").focus();
+                                            return false;
+                                        }
+                                        if (styleCar == '') {
+                                            alert("请选择车型");
+                                            $("#styleCar").focus();
+                                            return false;
+                                        }
+                                        if (buytimeval == '') {
+                                            alert("请选择日期");
+                                            $("#buytimeval").focus();
+                                            return false;
+                                        }
+                                        if (mialval == '') {
+                                            alert("请输入里程");
+                                            $("#mialval").focus();
+                                            return false;
+                                        }
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: url,
+                                            data: {
+                                                makeid: makeCar,
+                                                modeid: modeCar,
+                                                styleid: styleCar,
+                                                buytime: buytimeval,
+                                                mile: mialval
+                                            },
+                                            dataType: "json",
+                                            success: function (data) {
+                                                // alert(data);
+                                                $(".guBox").html(data.html);
+
+                                                $(".gj_btn").fancybox({
+                                                    'padding': '0',
+                                                    'titlePosition': 'inside',
+                                                    'transitionIn': 'elastic',
+                                                    'transitionOut': 'elastic'
+                                                });
+                                            }
+                                        });
+                                        return false;
+                                    });
+
+                                })
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sell-a">
+                <div class="wrap">
+                    <h2>二手车须知及流程</h2>
+                    <div class="sa-list">
+                        <ul class="clearfix">
+                            <li>
+                                <img src="{% static 'images/sell2_1.png' %}"/>
+                                <h4>准备手续</h4>
+                                <p>
+                                    <!-- <b>车辆手续：</b><br/>
+                                    包括行驶证、机动车登记证、购置附加税凭证、保险单据等，主要是前面三项。
+                                    <b>车主手续：</b><br/>
+                                    个人准备身份证原件；单位准备公章、组织机构代码证原件（正本、副本都可）。 -->
+                                    机动车登记证、行驶证、保养手册、身份证复印件等车辆资料
+                                </p>
+                            </li>
+                            <li>
+                                <img src="{% static 'images/sell2_2.png' %}"/>
+                                <h4>上门评估</h4>
+                                <p>
+                                    可以通过电话、网络提交评估需求，我们专业评估团队会及时联系您约上门评估时间和地点。
+
+                                </p>
+                            </li>
+                            <!-- <li>
+                                <img src="{% static 'images/sell2_3.png' %}"/>
+                                <h4>亿金365项检测</h4>
+                                <p>
+                                    可以通过二手车市场、置换、网上自己出售等多种方式选择出售车辆。选择一家知名度高、信誉好的二手车企业，不仅可以简化交易流程，还可避免不必要的经济损失。
+                                </p>
+                            </li> -->
+                            <li>
+                                <img src="{% static 'images/sell2_4.png' %}"/>
+                                <h4>确定价格</h4>
+                                <p>
+                                    评估师根据车况反馈评估价格，结合车主售车意愿确定车辆价格。
+                                </p>
+                            </li>
+                            <li class="last">
+                                <img src="{% static 'images/sell2_4.png' %}"/>
+                                <h4>手续办理</h4>
+                                <p>
+                                    确定交易的车辆准备好相关手续，由车主本人现场签字办理相关手续。
+
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="main-a">
+                <div class="mDiv sell-b">
+                    <img src="{% static 'images/sell3.jpg' %}"/>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:none;">
+            <div id="showDiv">
+                <div class="guBox">
+                    <h3>您的爱车</h3>
+                    <p>欧蓝德(进口) 2014款欧蓝德(进口)2.4L四驱豪华超值版7座 </p>
+                    <span>上牌时间：<font> 2014-12</font> </span><span>行驶里程： <font>1万公里</font></span>
+                    <h3>评估价：<strong>￥18.14万</strong></h3>
+                </div>
+                <img src="{% static 'images/jzgu.png' %}" class="s_gu"/>
+            </div>
+        </div>
+        <style type="text/css">
+            .sa-list li {
+                width: 223px;
+            }
+
+            #showDiv {
+                width: 800px;
+                height: 270px;
+                background: #fff;
+                position: relative;
+            }
+
+            #showDiv .s_gu {
+                position: absolute;
+                right: 20px;
+                bottom: 15px;
+            }
+
+            .guBox {
+                padding: 20px 30px 0 30px;
+                font-size: 20px;
+            }
+
+            .guBox h3 {
+                color: #000;
+                font-weight: normal;
+                margin-top: 30px;
+                font-size: 20px;
+            }
+
+            .guBox h3 strong {
+                font-weight: bold;
+                color: #0756b5
+            }
+
+            .guBox p {
+                color: #427dc6;
+                font-weight: bold;
+                padding: 10px 0;
+            }
+
+            .guBox span {
+                font-size: 14px;
+                display: inline-block;
+                margin-right: 15px;
+            }
+
+            .guBox span font {
+                font-weight: bold;
+                color: #437ec6;
+                font-size: 14px;
+            }
+        </style>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap-datetimepicker.js' %}"
+            charset="UTF-8"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap-datetimepicker.zh-CN.js' %}"
+            charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-datetimepicker.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+    <script type="text/javascript">
+        $('.form_datetime').datetimepicker({
+            format: 'yyyy-mm',
+            language: "zh-CN",
+            startView: 3,
+            minView: 3,
+            autoclose: true
+
+        });
+    </script>
+
+{% endblock %}
+
+

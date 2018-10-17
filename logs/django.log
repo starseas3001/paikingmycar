@@ -1,0 +1,113 @@
+[2018-10-09 22:19:50,276] [WARNING] Not Found: /favicon.ico
+[2018-10-09 22:25:16,656] [WARNING] Not Found: /favicon.ico
+[2018-10-10 10:40:46,050] [WARNING] Not Found: /favicon.ico
+[2018-10-10 10:42:14,640] [ERROR] Internal Server Error: /cars/searchresult/
+Traceback (most recent call last):
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/var/www/paikingmycar/apps/cars/views.py", line 185, in get
+    min_price, max_price = price
+ValueError: need more than 1 value to unpack
+[2018-10-10 10:42:21,407] [ERROR] Internal Server Error: /cars/searchresult/
+Traceback (most recent call last):
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/var/www/paikingmycar/apps/cars/views.py", line 185, in get
+    min_price, max_price = price
+ValueError: need more than 1 value to unpack
+[2018-10-10 10:42:24,503] [ERROR] Internal Server Error: /cars/searchresult/
+Traceback (most recent call last):
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/views/generic/base.py", line 68, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/var/www/paikingmycar/venv/local/lib/python2.7/site-packages/django/views/generic/base.py", line 88, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/var/www/paikingmycar/apps/cars/views.py", line 185, in get
+    min_price, max_price = price
+ValueError: need more than 1 value to unpack
+[2018-10-11 09:03:53,353] [WARNING] Not Found: /favicon.ico
+[2018-10-11 09:05:22,211] [WARNING] Not Found: /oper/sellcar/css/jquery.fancybox-1.3.4.css
+[2018-10-11 09:05:22,317] [WARNING] Not Found: /oper/sellcar/js/jquery.fancybox-1.3.4.js
+[2018-10-11 09:05:26,839] [WARNING] Not Found: /oper/sellcar/css/jquery.fancybox-1.3.4.css
+[2018-10-11 09:05:26,841] [WARNING] Not Found: /oper/sellcar/js/jquery.fancybox-1.3.4.js
+[2018-10-11 09:05:28,003] [WARNING] Not Found: /Admin/Login/buildVerify.html
+[2018-10-14 02:56:39,046] [WARNING] Not Found: /wp-includes/js/comment-reply.min.js
+[2018-10-14 02:56:39,136] [WARNING] Not Found: /skins/vector/csshover.htc
+[2018-10-14 02:56:39,225] [WARNING] Not Found: /misc/states.js
+[2018-10-14 02:56:39,390] [WARNING] Not Found: /include/js/md5.js
+[2018-10-14 02:56:39,478] [WARNING] Not Found: /include/js/common.js
+[2018-10-14 02:56:39,567] [WARNING] Not Found: /include/js/ajax.js
+[2018-10-14 02:56:39,655] [WARNING] Not Found: /res/js/dev/pages/common/global.js
+[2018-10-14 02:56:39,744] [WARNING] Not Found: /js/wind_editor.js
+[2018-10-14 02:56:39,833] [WARNING] Not Found: /styles/prosilver/template/forum_fn.js
+[2018-10-14 02:56:39,924] [WARNING] Not Found: /styles/prosilver/template/styleswitcher.js
+[2018-10-14 02:56:40,013] [WARNING] Not Found: /editor/ubb/uploader.js
+[2018-10-14 02:56:40,102] [WARNING] Not Found: /template/default/style.css
+[2018-10-14 02:56:40,270] [WARNING] Not Found: /images/js/common.js
+[2018-10-14 02:56:40,358] [WARNING] Not Found: /templets/style/dede.css
+[2018-10-14 02:56:40,447] [WARNING] Not Found: /include/dedeajax2.js
+[2018-10-14 02:56:40,535] [WARNING] Not Found: /images/default/inc.js
+[2018-10-14 02:56:40,624] [WARNING] Not Found: /js/lang/core/zh-cn.js
+[2018-10-14 02:56:40,711] [WARNING] Not Found: /js/lang/cms/zh-cn.js
+[2018-10-14 02:56:40,799] [WARNING] Not Found: /d/js/acmsd/ecms_dialog.js
+[2018-10-14 02:56:40,887] [WARNING] Not Found: /skin/default/js/tabs.js
+[2018-10-14 02:56:41,132] [WARNING] Not Found: /lang/zh/front.js
+[2018-10-14 02:56:41,227] [WARNING] Not Found: /style/default/content.css
+[2018-10-14 02:56:41,314] [WARNING] Not Found: /lang/zh/edit.js
+[2018-10-14 02:56:41,402] [WARNING] Not Found: /rockmongo/
+[2018-10-14 02:56:41,491] [WARNING] Not Found: /server-status
+[2018-10-14 02:56:41,580] [WARNING] Not Found: /ueditor.all.js
+[2018-10-14 02:56:41,668] [WARNING] Not Found: /wikilib.d/PmWiki.ChangeLog
+[2018-10-14 02:56:41,757] [WARNING] Not Found: /4e5e5d7364f443e28fbf0d3ae744a59a
+[2018-10-14 02:56:41,845] [WARNING] Not Found: /jenkins/
+[2018-10-14 02:56:41,934] [WARNING] Not Found: /console/login/LoginForm.jsp
+[2018-10-14 02:56:42,022] [WARNING] Not Found: /solr/
+[2018-10-14 21:51:00,564] [WARNING] Not Found: /favicon.ico
+[2018-10-14 21:52:00,426] [WARNING] Not Found: /Admin/Login/buildVerify.html
+[2018-10-14 21:52:09,384] [WARNING] Not Found: /Admin/Login/buildVerify.html
+[2018-10-16 16:03:44,097] [WARNING] Not Found: /wp-includes/js/comment-reply.min.js
+[2018-10-16 16:03:44,189] [WARNING] Not Found: /skins/vector/csshover.htc
+[2018-10-16 16:03:44,282] [WARNING] Not Found: /misc/states.js
+[2018-10-16 16:03:44,455] [WARNING] Not Found: /include/js/md5.js
+[2018-10-16 16:03:44,546] [WARNING] Not Found: /include/js/common.js
+[2018-10-16 16:03:44,637] [WARNING] Not Found: /include/js/ajax.js
+[2018-10-16 16:03:44,729] [WARNING] Not Found: /res/js/dev/pages/common/global.js
+[2018-10-16 16:03:44,820] [WARNING] Not Found: /js/wind_editor.js
+[2018-10-16 16:03:44,911] [WARNING] Not Found: /styles/prosilver/template/forum_fn.js
+[2018-10-16 16:03:45,002] [WARNING] Not Found: /styles/prosilver/template/styleswitcher.js
+[2018-10-16 16:03:45,093] [WARNING] Not Found: /editor/ubb/uploader.js
+[2018-10-16 16:03:45,185] [WARNING] Not Found: /template/default/style.css
+[2018-10-16 16:03:45,359] [WARNING] Not Found: /images/js/common.js
+[2018-10-16 16:03:45,450] [WARNING] Not Found: /templets/style/dede.css
+[2018-10-16 16:03:45,540] [WARNING] Not Found: /include/dedeajax2.js
+[2018-10-16 16:03:45,632] [WARNING] Not Found: /images/default/inc.js
+[2018-10-16 16:03:45,723] [WARNING] Not Found: /js/lang/core/zh-cn.js
+[2018-10-16 16:03:45,815] [WARNING] Not Found: /js/lang/cms/zh-cn.js
+[2018-10-16 16:03:45,906] [WARNING] Not Found: /d/js/acmsd/ecms_dialog.js
+[2018-10-16 16:03:45,998] [WARNING] Not Found: /skin/default/js/tabs.js
+[2018-10-16 16:03:46,251] [WARNING] Not Found: /lang/zh/front.js
+[2018-10-16 16:03:46,343] [WARNING] Not Found: /style/default/content.css
+[2018-10-16 16:03:46,435] [WARNING] Not Found: /lang/zh/edit.js
+[2018-10-16 16:03:46,528] [WARNING] Not Found: /rockmongo/
+[2018-10-16 16:03:46,619] [WARNING] Not Found: /server-status
+[2018-10-16 16:03:46,711] [WARNING] Not Found: /ueditor.all.js
+[2018-10-16 16:03:46,803] [WARNING] Not Found: /wikilib.d/PmWiki.ChangeLog
+[2018-10-16 16:03:46,895] [WARNING] Not Found: /4e5e5d7364f443e28fbf0d3ae744a59a
+[2018-10-16 16:03:46,986] [WARNING] Not Found: /jenkins/
+[2018-10-16 16:03:47,077] [WARNING] Not Found: /console/login/LoginForm.jsp
+[2018-10-16 16:03:47,169] [WARNING] Not Found: /solr/

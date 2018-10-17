@@ -1,0 +1,110 @@
+{% extends 'base_car.html' %}
+{% load staticfiles %}
+{% load price_cacl %}
+{% block title %}
+    会员中心-郑州高品质二手车专家_河南亿金名车广场
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/hurst.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="about">
+        <div class="mTags wrap"><a href="/">亿金名车广场</a>><a href="/member/index/channel/7.html">会员中心</a>><a
+                href="/Member/car/channel/7/list/12.html">我的订单</a></div>
+        <div class="mebBox">
+            <div class="meb-cont clearfix wrap">
+                <div class="meb-nav left dInline">
+                    <ul class="clearfix">
+                        <li><a href="{% url 'users:user_center' %}">会员中心</a></li>
+                        <li><a href="{% url 'users:user_needs' %}">我的需求</a></li>
+                        <li><a href="{% url 'users:user_cars' %}">我的订单</a></li>
+                        <li class="on"><a href="{% url 'users:look_fav' %}">我的收藏</a></li>
+                        <li><a href="{% url 'users:user_account' %}">账户管理</a></li>
+                    </ul>
+                </div>
+            {% if request.user.is_authenticated %}
+                <div class="meb-right right dInline">
+                    <div class="mr-top">
+                        <div class="mr-top-div clearfix"><span class="left"> <img
+                                src="{% static 'images/photo.png' %}"/> </span>
+                            <div class="mr-infor left dInline">
+                                <h2>您好，尊敬的会员 <b>{{ request.user.name }}</b></h2>
+                                <p> 手机：{{ request.user.mobile }} 邮箱：{{ request.user.email }}| [ <a
+                                        href="{% url 'users:user_account' %}">管理账户信息</a> ] </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mr-detail">
+                        <div class="mr-tab clearfix"><a class="on">我的收藏</a>
+                            <!--<a>售后历史</a>-->
+                        </div>
+                        <ul class="cs-list">
+                            {% for car in fav_cars %}
+                            <li class="clearfix" id="id_{{ car.id }}" style="position: relative;">
+                                <span class="carImg left dInline">
+                                    <a href="{% url 'cars:machine_show' car.id %}" target="_blank">
+                                    <div class="car_bg"> </div>
+                                    <img src="{{ MEDIA_URL }}{{ car.image }}" width="300"/></a>
+                                </span>
+                                <div class="carTxt right dInline">
+                                    <h2><a href="{% url 'cars:machine_show' car.id %}" target="_blank">
+
+                                        {{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}
+                                        </a>
+                                    </h2>
+                                    <p><span>上牌时间：{{ car.licence_date|date:"Y-m" }}</span> <span>行驶里程：{{ car.travel_distance }}</span> <span>排量：{{ car.displacement }}</span> <span>排放标准：{{ car.get_emission_standard_display }}</span>
+                                    </p>
+                                    <div class="price clearfix" style="margin:8px 0;">
+                                        <div class="left dInline pNum" style="width:110px;"><font>{{ car.get_price_type_display }}</font><br/>
+                                            <span class="num nBlue">{{ car.price }} </span><font> 万元</font></div>
+                                        <span class="num1 left" style="height:43px; width:450px;padding-top:10px;"><em>新车价：{{ car.new_car_price }}万元(含{{ car.new_car_price|tax }}元购置税)</em><br/>
+                                        为您节省：{{ car.new_car_price|save_money:car.price }}万元 <font><a href="#" target="_blank">最低首付{{ car.downpayment_percent }}%（{{ car.price|first_pay:car.downpayment_percent }}万），日还款约 {{ car.price|per_pay:car.downpayment_percent }} 元</a></font>
+                                      <input type="hidden" class="CarValue_{{ car.id}}"
+                                             value="{img:'{{ MEDIA_URL }}{{ car.image }}',id:'{{ car.id}}',price:'{{ car.price }}',status:'加入对比',title:'{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}',url:'{% url 'cars:machine_show' car.id %}'}"/>
+                                      </span></div>
+                                       <div class="cs_bt clearfix" style="padding-top:7px;">
+
+                                               <a href="javascript:void(0)" class="cs-q b-login" id="Order_1165">立即抢订</a>
+                                               <a href="javascript:void(0)" onclick="balance('1165')" class="balance_1165">加入对比</a>
+                                               <a href="javascript:void(0)" onclick="collection({{ car.id }})" id="collection_{{ car.id }}">取消收藏</a>
+
+                                           <span>已有{{ car.fav_nums }}人关注此车</span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+                        </ul>
+                        <div class="hPages"></div>
+
+                    </div>
+                </div>
+            {% else %}
+            <div class="meb-right right dInline">
+                        <div class="me-dl" style="display:block;">
+                                <div class="me-more">
+                                        <h3>
+                                            <a class="b-login" href="#" target="_self" style="color: blue"> 您目前没有登录！点击这里登录...</a>
+                                        </h3>
+
+                                </div>
+                            </div>
+                    </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa70c6792578150b40ad413464080efa' type='text/javascript'%3E%3C/script%3E"))
+    </script>
+
+{% endblock %}
+

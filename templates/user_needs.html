@@ -1,0 +1,212 @@
+{% extends 'base_car.html' %}
+{% load staticfiles %}
+{% load price_cacl %}
+{% block title %}
+    会员中心-郑州高品质二手车专家_河南亿金名车广场
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/hurst.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="about">
+        <div class="mTags wrap">
+            <a href="/">亿金名车广场</a>><a href="#">会员中心</a>><a href="#">我的需求</a>
+        </div>
+        <div class="mebBox">
+            <div class="meb-cont clearfix wrap">
+                <div class="meb-nav left dInline">
+                    <ul class="clearfix">
+
+                        <li><a href="{% url 'users:user_center' %}">会员中心</a></li>
+                        <li class="on"><a href="{% url 'users:user_needs' %}">我的需求</a></li>
+                        <li><a href="{% url 'users:user_cars' %}">我的订单</a></li>
+                        <li><a href="{% url 'users:look_fav' %}">我的收藏</a></li>
+                        <li><a href="{% url 'users:user_account' %}">账户管理</a></li>
+                    </ul>
+                </div>
+                {% if request.user.is_authenticated %}
+                    <div class="meb-right right dInline">
+                        <div class="mr-top">
+                            <div class="mr-top-div clearfix">
+        <span class="left">
+            <img src="{% static 'images/photo.png' %}"/>
+        </span>
+                                <div class="mr-infor left dInline">
+                                    <h2>您好，尊敬的会员 <b>{{ request.user.username }}</b></h2>
+                                    <p>
+                                        手机：{{ request.user.mobile }} 邮箱：{{ request.user.email }} | [ <a
+                                            href="{% url 'users:user_account' %}">管理账户信息</a> ]
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mr-detail">
+                            <div class="mr-tab clearfix">
+
+                                <a class="on">私人订制</a>
+                                <a>卖车需求</a>
+                            </div>
+                            <div class="me-box">
+                                <div class="me-dl" style="display:block;">
+                                    <div class="me-more">
+                                        <div>
+                                            <ul class="cs-list">
+                                                {% for need in needs %}
+                                                    <li class="clearfix" style="position: relative;">
+
+                                                        <div class="guBox">
+                                                            <p>{{ need.car_brand }} {{ need.series }} </p>
+                                                            <span>计划购买时间：<font> {{ need.purchase_date }}</font> </span><span>使用年限： <font>{{ need.use_years }}</font></span>
+                                                            <h3>
+                                                                价格范围：<strong>￥{{ need.min_price }}-{{ need.max_price }}万</strong>
+                                                            </h3>
+                                                            <p></p>
+                                                        </div>
+                                                    </li>
+                                                {% empty %}
+                                                    <a href="{% url 'oper:srdz' %}">
+                                                        <h3>您目前没有，买车需求！</h3>
+                                                        <p>点击这里提交您的需求...</p>
+                                                    </a>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <style type="text/css">
+                                            .sa-list li {
+                                                width: 223px;
+                                            }
+
+                                            #showDiv {
+                                                width: 800px;
+                                                height: 270px;
+                                                background: #fff;
+                                                position: relative;
+                                            }
+
+                                            #showDiv .s_gu {
+                                                position: absolute;
+                                                right: 20px;
+                                                bottom: 15px;
+                                            }
+
+                                            .guBox {
+                                                padding: 20px 30px 0 30px;
+                                                font-size: 20px;
+                                            }
+
+                                            .guBox h3 {
+                                                color: #000;
+                                                font-weight: normal;
+                                                margin-top: 30px;
+                                                font-size: 20px;
+                                            }
+
+                                            .guBox h3 strong {
+                                                font-weight: bold;
+                                                color: #0756b5
+                                            }
+
+                                            .guBox p {
+                                                color: #427dc6;
+                                                font-weight: bold;
+                                                padding: 10px 0;
+                                            }
+
+                                            .guBox span {
+                                                font-size: 14px;
+                                                display: inline-block;
+                                                margin-right: 15px;
+                                            }
+
+                                            .guBox span font {
+                                                font-weight: bold;
+                                                color: #437ec6;
+                                                font-size: 14px;
+                                            }
+                                        </style>
+
+                                    </div>
+                                </div>
+                                <div class="me-dl">
+                                    <div class="me-more">
+                                        <div>
+                                            <ul class="cs-list">
+                                                {% for sell in sells %}
+                                                    <li class="clearfix" style="position: relative;">
+
+                                                        <div class="guBox">
+                                                            <p>{{ sell.car_brand }} {{ need.series }} </p>
+                                                            <span>上牌时间：<font> {{ sell.licence_date }}</font> </span><span>行驶里程： <font>{{ sell.travel_distance }}万公里</font></span>
+                                                            <h3>
+                                                                评估价：
+                                                                <strong>
+                                                                    {% if sell.eval_price == '暂无价格' %}
+                                                                        {{ sell.eval_price }}
+                                                                    {% else %}
+                                                                        ￥{{ sell.eval_price  }}万
+                                                                    {% endif %}
+                                                                </strong>
+                                                            </h3>
+                                                            <p></p>
+                                                        </div>
+                                                    </li>
+                                                {% empty %}
+                                                    <a href="{% url 'oper:sell_car' %}">
+                                                        <h3>您目前没有，卖车需求！</h3>
+                                                        <p>点击这里提交您的爱车信息...</p>
+                                                    </a>
+                                                {% endfor %}
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="meb-right right dInline">
+                        <div class="me-dl" style="display:block;">
+                            <div class="me-more">
+                                <h3>
+                                    <a class="b-login" href="#" target="_self" style="color: blue">
+                                        您目前没有登录！点击这里登录...</a>
+                                </h3>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript" src="{% static 'js/smooth-scroll.js' %}"></script>
+
+    <script type="text/javascript">
+        $('.mr-tab a').each(function (index) {
+            $(this).click(function () {
+                $(this).addClass('on').siblings().removeClass('on');
+                $('.me-dl').eq(index).show().siblings().hide();
+            })
+        });
+        $('.cs_ding a').mouseover(function () {
+            this.style.color = 'blue';
+        })
+        $('.cs_ding a').mouseout(function () {
+            this.style.color = '#4573af';
+        })
+
+    </script>
+
+
+{% endblock %}
+

@@ -1,0 +1,541 @@
+{% extends 'base_car.html' %}
+{% load staticfiles %}
+{% load price_cacl %}
+{% load get_status %}
+
+{% block title %}
+    郑州高品质二手车专家_亿金汽车
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        #banner .prevs, #banner .nexts {
+            position: absolute;
+            top: 220px;
+            z-index: 100;
+            margin-top: -25px;
+        }
+
+        #banner .nexts {
+            right: 0;
+        }
+
+        #banner .banShow a {
+            display: block;
+            width: 100%;
+            height: 465px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="banner">
+        <div class="banShow clearfix" style="width:100%;">
+            <a href="#" class="bDiv" style="background: url({% static 'images/y77.jpg' %}) no-repeat center top;"></a>
+        </div>
+        <div class="b_btn wrap">
+            <!--<a class="prevs"><img src="images/l1.png"></a>
+            <a class="nexts"><img src="images/r1.png"></a>-->
+        </div>
+
+        <div class="searchBox" style="position: absolute">
+            <div class="xbg"></div>
+            <div class="xnrj"> 1
+                <img src="{% static 'images/in1.png' %}"/>
+                <form onsubmit="return indexSearch()" class="clearfix">
+                    <input id="index_keyword" type="text" value="" name="index_keyword" placeholder="请输入您想要的品牌或车系" class="left"/>
+                    <input type="submit" value="" class="right"/>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="main">
+        <div class="main-a mDiv" id="box1">
+            <div class="wrap">
+                <div class="in-tit clearfix">
+                    <h1 class="left dInline"> 今日推荐 </h1>
+                    <!--<div class="end-time right dInline">
+                                距离结束只剩下<b>20</b>小时<b>50</b>分<b>18</b>秒
+                            </div>-->
+                </div>
+                <div class="inBox clearfix">
+                    <div class="thPic left dInline pve tBox"><a href="{% url 'cars:machine_show' jl.car_name.id %}"
+                                                                target="_blank">
+                        <img src="{{ MEDIA_URL }}{{ jl.image }}" class="imgVt"/>
+                        <span class="icon icon_hd"></span></a>
+                    </div>
+                    <div class="tBox right pve dInline thPicRight">
+                        <div class="thPic1 left dInline pve">
+                            <ul class="clearfix">
+                                {% for car in recomand_cars %}
+                                <li class="pve"><a href="{% url 'cars:machine_show' car.id %}" target="_blank"> <span class="icon icon_th"></span>
+                                    <div class="car-pic"><img src="{{ MEDIA_URL }}{{ car.image }}"/></div>
+                                    <div class="price"><font>一口价</font> <span class="num nBlue">{{ car.price }} </span> <font>&nbsp;&nbsp;万元</font>
+                                    </div>
+                                    <p>{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}</p>
+                                </a></li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                        <div class="pve right dInline hdPic"><a href="{% url 'cars:machine_show' jr.car_name.id %}"
+                                                                target="_blank"> <img
+                                src="{{ MEDIA_URL }}{{ jr.image }}" class="imgVt"/> <span
+                                class="icon icon_hd"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mDiv" id="box2">
+            <div class="wrap">
+                <div class="in-tit clearfix">
+                    <h1 class="left dInline"> 最新到店 </h1>
+                </div>
+                <div class="inBox clearfix">
+                    <div class="tBox left pve dInline thPicRight">
+                        <div class="thPic1 left dInline pve">
+                            <ul class="clearfix">
+                                {% for car in new_cars %}
+                                    {% if forloop.counter < 4 %}
+                                        <li class="pve"><a href="{% url 'cars:machine_show' car.id %}" target="_blank">
+                                            <span class="icon icon_npro"></span>
+                                            <div class="car-pic"><img src="{{ MEDIA_URL }}{{ car.image }}"/></div>
+                                            <div class="price"><font>{{ car.get_price_type_display }}</font> <span
+                                                    class="num nBlue">{{ car.price }} </span>
+                                                <font>&nbsp;&nbsp;万元</font>
+                                            </div>
+                                            <p>{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}</p>
+                                        </a></li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                <li class="pve liHd"><a href="{% url 'cars:machine_show' zl.car_name.id %}"
+                                                        target="_blank">
+                                    <img src="{{ MEDIA_URL }}{{ zl.image }}" class="imgVt"/>
+                                    <span class="icon icon_hd"></span></a>
+                                </li>
+                                {% for car in new_cars %}
+                                    {% if forloop.counter == 4 %}
+                                        <li class="pve"><a href="{% url 'cars:machine_show' car.id %}" target="_blank"> <span
+                                                class="icon icon_npro"></span>
+                                            <div class="car-pic"><img src="{{ MEDIA_URL }}{{ car.image }}"/></div>
+                                            <div class="price"><font>{{ car.get_price_type_display }}</font> <span
+                                                    class="num nBlue">{{ car.price }} </span>
+                                                <font>&nbsp;&nbsp;万元</font>
+                                            </div>
+                                            <p>{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}</p>
+                                        </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="thPic right dInline pve tBox"><a href="{% url 'cars:machine_show' zr.car_name.id %}"
+                                                                 target="_blank"> <img
+                            src="{{ MEDIA_URL }}{{ zr.image }}" class="imgVt"/> <span class="icon icon_hd"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mDiv main-a">
+            <div class="wrap">
+                <div class="in-tit clearfix">
+                    <h1 class="left dInline"> 精品车源 </h1>
+                </div>
+                <div class="jpBox">
+                    <div class="jpTit">
+                        <a class="on"> <img src="{% static 'images/cLogo.png' %}"/> <span>推荐车源</span> <i></i></a>
+
+                        {% for brand in display_brands %}
+                            {% if not forloop.last %}
+                                <a> <img src="{{ MEDIA_URL }}{{ brand.logo }}" width="50" height="38"/>
+                                    <span>{{ brand.name }}</span> <i></i></a>
+                            {% else %}
+                                <a class="last"> <img src="{{ MEDIA_URL }}{{ brand.logo }}" width="50" height="38"/>
+                                    <span>{{ brand.name }}</span><i></i></a>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                    <div class="jpCont">
+                        <div class="jpDl" style="display: block;">
+                            <ul class="clearfix">
+
+                                {% for car in new_cars %}
+                                    <li class="clearfix" style="position: relative;">
+                                        <a href="{% url 'cars:machine_show' car.id %}" target="_blank">
+                                            <div class="carImg left dInline">
+                                                <img src="{{ MEDIA_URL }}{{ car.image }}" width="266"/>
+                                            </div>
+
+                                            <div class="right carTxt dInline pve">
+                                                <div class="c-txt">
+                                                    <h3>
+                                                        <a href="#" target="_blank">{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}</a>
+                                                    </h3>
+
+                                                    <p>{{ car.licence_date|date:"Y-m" }} | {{ car.travel_distance }}
+                                                        | {{ car.displacement }}
+                                                        | {{ car.get_emission_standard_display }}</p>
+                                                    <div class="price">
+                                                        <p>亿金一口价：</p>
+                                                        <i>￥</i> <span class="num nBlue">{{ car.price }} </span><font>
+                                                        万元</font> <font>
+                                                        省：￥ {{ car.new_car_price|save_money:car.price }} 万</font>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                            <div class="proMore"><a href="{% url 'cars:machine_list' %}" target="_blank">查看更多>></a>
+                            </div>
+                        </div>
+
+                        <div class="jpDl">
+                            <ul class="clearfix">
+                                {% for car in aodis %}
+                                    <li class="clearfix" style="position: relative;"><a href="#" target="_blank">
+                                        <div class="carImg left dInline"><img src="{{ MEDIA_URL }}{{ car.image }}"
+                                                                              width="266"/></div>
+                                        <div class="right carTxt right dInline pve">
+                                            <div class="c-txt">
+                                                <h3><a href="#"
+                                                       target="_blank">{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}</a>
+                                                </h3>
+                                                <p>{{ car.licence_date|date:"Y-m" }} | {{ car.travel_distance }}万公里
+                                                    | {{ car.displacement }}
+                                                    | {{ car.get_emission_standard_display }}</p>
+                                                <div class="price">
+                                                    <p>亿金一口价：</p>
+                                                    <i>￥</i> <span class="num nBlue">{{ car.price }} </span><font>
+                                                    万元</font> <font> 省：￥
+                                                    {{ car.new_car_price|save_money:car.price }} 万</font></div>
+                                            </div>
+                                        </div>
+                                    </a></li>
+                                {% endfor %}
+
+
+                            </ul>
+                            <div class="proMore"><a href="{% url 'cars:machine_list' %}" target="_blank">查看更多>></a>
+                            </div>
+                        </div>
+
+                        <div class="jpDl">
+                            <ul class="clearfix">
+                                {% for car in benchis %}
+                                    <li class="clearfix" style="position: relative;"><a href="#" target="_blank">
+                                        <div class="carImg left dInline"><img src="{{ MEDIA_URL }}{{ car.image }}"
+                                                                              width="266"/></div>
+                                        <div class="right carTxt right dInline pve">
+                                            <div class="c-txt">
+                                                <h3><a href="#"
+                                                       target="_blank">{{ car.car_series.series_name }}&nbsp;{{ car.kuanhao }}&nbsp;{{ car.displacement }}&nbsp;{{ car.get_gear_box_display }}&nbsp;{{ car.version }}</a>
+                                                </h3>
+                                                <p>{{ car.licence_date|date:"Y-m" }} | {{ car.travel_distance }}万公里
+                                                    | {{ car.displacement }}
+                                                    | {{ car.get_emission_standard_display }}</p>
+                                                <div class="price">
+                                                    <p>亿金一口价：</p>
+                                                    <i>￥</i> <span class="num nBlue">{{ car.price }} </span><font>
+                                                    万元</font> <font> 省：￥
+                                                    {{ car.new_car_price|save_money:car.price }} 万</font></div>
+                                            </div>
+                                        </div>
+                                    </a></li>
+                                {% endfor %}
+
+
+                            </ul>
+                            <div class="proMore"><a href="{% url 'cars:machine_list' %}" target="_blank">查看更多>></a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mDiv">
+            <div class="wrap">
+                <div class="in-tit clearfix">
+                    <h1 class="left dInline"> 亿金榜单 </h1>
+                </div>
+                <div class="bdBox clearfix">
+                    <div class="left dLeft dInline">
+                        <ul class="clearfix">
+                            <li><a href="{% url 'cars:machine_list' %}?sort=order_nums" target="_blank"> <img src="{% static 'images/55d2c89756ef2.jpg' %}"/></a>
+                            </li>
+                            <li><a href="{% url 'cars:machine_show' br.car_name.id %}" target="_blank"> <img
+                                    src="{{ MEDIA_URL }}{{ br.image }}"/></a></li>
+                            <li><a href="{% url 'cars:machine_show' bl.car_name.id %}" target="_blank"> <img
+                                    src="{{ MEDIA_URL }}{{ bl.image }}"/></a></li>
+                            <li><a href="{% url 'cars:machine_list' %}?sort=click_nums" target="_blank"> <img src="{% static 'images/55d2c8e954f6f.jpg' %}"/></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="left dRight dInline">
+                        <link rel="stylesheet" type="text/css" href="{% static 'css/alert.css' %}">
+                        <style type="text/css">
+                            input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+                                color: #000;
+                            }
+
+                            input:-moz-placeholder, textarea:-moz-placeholder {
+                                color: #000;
+                            }
+
+                            input::-moz-placeholder, textarea::-moz-placeholder {
+                                color: #000;
+                            }
+
+                            input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+                                color: #000;
+                            }
+                        </style>
+
+                        <form class="dForm" name="dForm" id="dForm" method="post" enctype="multipart/form-data"
+                              onsubmit="return cleckform({{ request.user.id }});">
+                            <h2>私人订制</h2>
+                            <h3>专业车辆顾问为您服务</h3>
+
+                            {% if request.user.is_authenticated %}
+                            {% else %}
+                                <a id="srdz_login" style="color:red">您目前暂未登录，点击登录>>></a>
+                            {% endif %}
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        {% if request.user.is_authenticated %}
+                                            <select class="Smakeid" name="makeid" id="Smakeid2" placeholder="所属品牌">
+                                                <option value=""> 选择品牌（必选）</option>
+                                                {% for brands in all_brands %}
+                                                    <option value="{{ brands.name }}"> {{ brands.key }} {{ brands.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% else %}
+                                            <select class="Smakeid" name="makeid" id="alert_login" placeholder="所属品牌">
+                                                <option value=""> 选择品牌（必选）</option>
+                                                <option>您目前暂未登录，请先登录</option>
+                                                {% for brands in all_brands %}
+                                                    <option value="{{ brands.name }}"> {{ brands.key }} {{ brands.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% endif %}
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="xlselect">
+                                            {% if request.user.is_authenticated %}
+                                                <select name="modeid" id="Smodeid2">
+                                                    <option>选择车系(必选)</option>
+                                                </select>
+                                            {% else %}
+                                                <select name="modeid" id="alert_login">
+                                                    <option>选择车系(必选)</option>
+                                                    <option>您目前暂未登录，请先登录</option>
+                                                </select>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><select name="years">
+                                        <option value="不限">选择使用年限</option>
+                                        <option value="1年以内">1年以内</option>
+                                        <option value="2年以内">2年以内</option>
+                                        <option value="3年以内">3年以内</option>
+                                        <option value="3-5年">3-5年</option>
+                                        <option value="5年以上">5年以上</option>
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" name="dprice" placeholder="最少预算" value="" class="cInput"
+                                               onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                               onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                        <input type="text" name="hprice" placeholder="最多预算" value="" class="cInput"
+                                               onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                               onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+                                        万元
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" value="" placeholder="计划购买时间" style="width:95%"
+                                               class="form_datetime cInput" name="buytime" data-date-format="yyyy-mm">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><textarea name="content" placeholder="其他要求（例如车身和内饰颜色、行驶里程要求等）"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                        <input type="button" value="提交需求" class="sBtn" style=" padding:0;"
+                                               onclick="$('#dForm').submit()"/>
+                                        {#                                    <input id="input-phone" type="hidden" name="mobile" value=""/>#}
+                                        {#                                  <input id="input-verify" type="hidden" name="verify" value=""/>#}
+                                        {#                                  <input type="button" value="提交需求" class="sBtn" style=" padding:0;" id="sendMESS"/>#}
+                                    </td>
+                                </tr>
+                            </table>
+                            {% csrf_token %}
+                        </form>
+                        <div id="popBoxYzm" style="display:none">
+                            <div class="popForm">
+                                <div class="p-detail">
+                                    <form action="" enctype="multipart/form-data" method="post" name="yzmcheck"
+                                          id="yzmcheck">
+                                        <ul class="login-items" style="width:100%">
+                                            <li>
+                                                <label>手机号</label>
+                                                <input type="text" value="" maxlength="32" name="mobile" id="shoujihao"
+                                                       style="width:120px">
+                                                <input type="checkbox" name="remembermobile"
+                                                       style=" width:auto; margin:10px 20px 0" id="remembermobile"/>
+                                                <label>记住此号</label>
+                                            </li>
+                                            <li>
+                                                <label>验证码</label>
+                                                <input type="text" value="" maxlength="16" name="verify" id="yanzhengma"
+                                                       style="width:120px; margin-right:20px;">
+                                                <img id="yzcode" width="100" height="42" alt="点击切换"></li>
+                                        </ul>
+                                        <div class="login-button">
+                                            <input type="button" value="立即提交" class="fM" onclick="sendtosend()"
+                                                   style="line-height:20px"/>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <a class="closed">×</a></div>
+                        </div>
+                        <input type="hidden" id="ckmobile" value="1"/>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mDiv main-a">
+            <div class="wrap">
+                <div class="in-tit clearfix">
+                    <h1 class="left dInline"> 亿金新闻 </h1>
+                </div>
+                <div class="in-news clearfix">
+                    <div class="new-left dInline left">
+                        <h3>动态</h3>
+                        <div class="clearfix">
+                            <div class="new-dl left dInline"><a href="#" class='aImg'><img
+                                    src="{{ MEDIA_URL }}{{ image_l.image }}" width='262' height='170'/></a>
+                                <ul>
+
+                                    {% for news in show_news %}
+                                        {% if forloop.counter <= 5 %}
+                                            <li>·<a href="#">{{ news.title }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </ul>
+                                <a style="float:right" href="#" target="_blank">更多>></a></div>
+                            <div class="new-dl right dInline"><a href="#" class='aImg'><img
+                                    src="{{ MEDIA_URL }}{{ image_r.image }}" width='262' height='170'/></a>
+                                <ul>
+                                    {% for news in show_news %}
+                                        {% if forloop.counter > 5 %}
+                                            <li>·<a href="#">{{ news.title }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                <a style="float:right" href="#" target="_blank">更多>></a></div>
+                        </div>
+                    </div>
+
+                    <div class="nKe left dInline">
+                        <div class="kTit">
+                            <h2>客户留言</h2>
+                        </div>
+                        <div class="slide">
+                            <div class="hd"><a class="prev"><img src="{% static 'images/in_l.jpg' %}"/></a>
+                                <ul>
+                                    <li>1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                </ul>
+                                <a class="next"><img src="{% static 'images/in_r.jpg' %}"/></a></div>
+                            <div class="bd">
+                                <ul>
+                                    <li class="clearfix">
+                                        {% for msg in messages %}
+                                            {% if forloop.counter <= 2 %}
+
+                                                <div class="bd-dl">
+                                                    <a href="#" class="aImg"><img src="{{ MEDIA_URL }}{{ msg.image }}"
+                                                                                  width="242" height="170"/></a>
+                                                    <h4>{{ msg.title }}</h4>
+                                                    <p>{{ msg.content|slice:'50' }}</p>
+                                                    <div align="right"><a href="#" class="cMore">查看详情</a></div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </li>
+
+                                    <li class="clearfix">
+                                        {% for msg in messages %}
+                                            {% if forloop.counter > 2 and forloop.counter <= 4 %}
+
+                                                <div class="bd-dl">
+                                                    <a href="#" class="aImg"><img src="{{ MEDIA_URL }}{{ msg.image }}"
+                                                                                  width="242" height="170"/></a>
+                                                    <h4>{{ msg.title }}</h4>
+                                                    <p>{{ msg.content|slice:'50' }}</p>
+                                                    <div align="right"><a href="#" class="cMore">查看详情</a></div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    </li>
+
+                                    <li class="clearfix">
+                                        {% for msg in messages %}
+                                            {% if forloop.counter > 4 %}
+
+                                                <div class="bd-dl">
+                                                    <a href="#" class="aImg"><img src="{{ MEDIA_URL }}{{ msg.image }}"
+                                                                                  width="242" height="170"/></a>
+                                                    <h4>{{ msg.title }}</h4>
+                                                    <p>{{ msg.content|slice:'50' }}</p>
+                                                    <div align="right"><a href="#" class="cMore">查看详情</a></div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+{% endblock %}

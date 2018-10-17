@@ -1,0 +1,103 @@
+{% extends 'base_car.html' %}
+{% load staticfiles %}
+{% load price_cacl %}
+{% block title %}
+    会员中心-郑州高品质二手车专家_亿金汽车
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/hurst.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="about">
+        <div class="mTags wrap">
+            <a href="#">亿金名车广场</a>><a href="/member/index/channel/7.html">会员中心</a>
+        </div>
+        <div class="mebBox">
+            <div class="meb-cont clearfix wrap">
+                <div class="meb-nav left dInline">
+                    <ul class="clearfix">
+                        <li class="on"><a href="{% url 'users:user_center' %}">会员中心</a></li>
+                        <li><a href="{% url 'users:user_needs' %}">我的需求</a></li>
+                        <li><a href="{% url 'users:user_cars' %}">我的订单</a></li>
+                        <li><a href="{% url 'users:look_fav' %}">我的收藏</a></li>
+                        <li><a href="{% url 'users:user_account' %}">账户管理</a></li>
+                    </ul>
+                </div>
+                {% if request.user.is_authenticated %}
+                    <div class="meb-right right dInline">
+                        <div class="mr-top">
+                        <div class="mr-top-div clearfix"><span class="left"> <img
+                                src="{% static 'images/photo.png' %}"/> </span>
+                            <div class="mr-infor left dInline">
+                                <h2>您好，尊敬的会员 <b>{{ request.user.name }}</b></h2>
+                                <p> 手机：{{ request.user.mobile }} 邮箱：{{ request.user.email }}| [ <a
+                                        href="{% url 'users:user_account' %}">管理账户信息</a> ] </p>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="mr-detail">
+                            <div class="me-box">
+                                <div class="mx-a">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <img src="{% static 'images/hu1.png' %}"/>
+                                            <span>您目前有
+                                                <a href="{% url 'users:user_cars' %}"><b>{{ order_nums }}</b></a> 个订单未付定金</span>
+                                        </li>
+                                        <li>
+                                            <img src="{% static 'images/hu2.png' %}"/>
+                                            <span>您共有 <a href="{% url 'users:look_fav' %}"><b>{{ fav_nums }}</b></a> 个收藏的车型</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="mx-b">
+                                    <ul>
+                                        <li class="clearfix">
+									<span class="left">
+										<img src="{% static 'images/hu3.png' %}"/>
+									</span>
+                                            <div class="mb-txt left dInline">
+                                                <h2>马上参加 <a href="{% url 'oper:srdz' %}">私人定制</a></h2>
+                                                <p>没有您满意的车型吗，马上参加量身定制可预订指定车型，亿金名车为您量身定制</p>
+                                            </div>
+                                        </li>
+                                        <!--<li class="clearfix last">
+                                            <span class="left">
+                                                <img src="images/hu4.png"/>
+                                            </span>
+                                            <div class="mb-txt left dInline">
+                                                <h2>您可以定制 <a href="#">到车通知</a> </h2>
+                                                <p>不想在每天数以万计的车源中错过自己满意的二手车吗？亿金收集您的需求，第一时间为您推送符合您的信息</p>
+                                            </div>
+                                        </li>-->
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="meb-right right dInline">
+                        <div class="me-dl" style="display:block;">
+                            <div class="me-more">
+                                <h3>
+                                    <a class="b-login" href="#" target="_self" style="color: blue">
+                                        您目前没有登录！点击这里登录...</a>
+                                </h3>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Faa70c6792578150b40ad413464080efa' type='text/javascript'%3E%3C/script%3E"))
+    </script>
+{% endblock %}
